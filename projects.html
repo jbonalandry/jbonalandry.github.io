@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — James Bona-Landry</title>
+<meta name="description" content="Projects by James Bona-Landry">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF6; --paper-alt:#F1EEE4; --ink:#1C1B17; --ink-soft:#5B594E;
+    --rule:#DAD5C6; --navy:#223A5E; --navy-deep:#152740; --ochre:#9C6B24; --max:1180px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans', system-ui, sans-serif; -webkit-font-smoothing:antialiased;}
+  a{color:var(--navy);}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+
+  header{position:sticky; top:0; z-index:20; background:rgba(251,250,246,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--rule);}
+  header .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:20px; padding-bottom:20px;}
+  .brand{font-family:'Source Serif 4', serif; font-size:1.2rem; font-weight:600; color:var(--ink); text-decoration:none;}
+  nav ul{list-style:none; display:flex; gap:30px; margin:0; padding:0;}
+  nav a{text-decoration:none; color:var(--ink-soft); font-size:0.95rem; font-weight:500; padding-bottom:4px; border-bottom:2px solid transparent;}
+  nav a:hover{color:var(--ink);}
+  nav a.active{color:var(--ink); border-bottom-color:var(--navy);}
+
+  .page-head{padding:56px 0 8px;}
+  h1{font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(2rem,3.4vw,2.7rem); margin:0 0 16px;}
+  .lede{font-family:'Source Serif 4', serif; font-size:1.05rem; line-height:1.6; color:var(--ink); max-width:64ch; margin:0 0 28px;}
+
+  /* filter bar */
+  .filter-bar{display:flex; flex-wrap:wrap; gap:10px; padding-bottom:40px;}
+  .filter-btn{
+    all:unset; cursor:pointer; font-family:'IBM Plex Sans', sans-serif; font-size:0.82rem; font-weight:500;
+    padding:7px 14px; border:1px solid var(--rule); border-radius:100px; color:var(--ink-soft);
+    transition:all 150ms ease;
+  }
+  .filter-btn:hover{border-color:var(--navy); color:var(--navy);}
+  .filter-btn.active{background:var(--navy); border-color:var(--navy); color:var(--paper);}
+
+  /* card grid */
+  .proj-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:36px 28px; padding-bottom:72px; align-items:start;
+  }
+  .proj-card{
+    background:var(--paper); border:1px solid var(--rule); border-radius:4px; overflow:hidden;
+    display:flex; flex-direction:column; transition:border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  }
+  .proj-card:hover{border-color:var(--navy); transform:translateY(-3px); box-shadow:0 10px 24px -14px rgba(28,27,23,0.28);}
+  .proj-card.hidden{display:none;}
+
+  .proj-thumb{display:block; aspect-ratio:4/3; overflow:hidden; background:var(--paper-alt); border-bottom:1px solid var(--rule);}
+  .proj-thumb img{width:100%; height:100%; object-fit:cover; transition:transform 400ms ease;}
+  .proj-card:hover .proj-thumb img{transform:scale(1.045);}
+
+  .proj-body{padding:20px 20px 22px; display:flex; flex-direction:column; flex:1;}
+  .proj-date{font-size:0.78rem; color:var(--ink-soft); margin:0 0 6px; letter-spacing:0.02em;}
+  .proj-body h2{font-family:'Source Serif 4', serif; font-weight:600; font-size:1.15rem; line-height:1.3; margin:0 0 10px;}
+  .proj-body h2 a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent;}
+  .proj-body h2 a:hover{border-bottom-color:var(--navy); color:var(--navy);}
+  .proj-desc{font-family:'Source Serif 4', serif; font-size:0.9rem; line-height:1.56; color:var(--ink); margin:0 0 16px; flex:1;}
+  .proj-desc a{border-bottom:1px solid var(--rule); text-decoration:none;}
+  .proj-desc a:hover{border-bottom-color:var(--navy);}
+
+  .proj-tags{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 16px;}
+  .proj-tags span{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--navy);
+    background:var(--paper-alt); border:1px solid var(--rule); border-radius:3px; padding:3px 7px;
+  }
+
+  .proj-link{
+    font-size:0.85rem; font-weight:500; color:var(--navy); text-decoration:none;
+    border-bottom:1px solid var(--rule); align-self:flex-start; margin-top:auto;
+  }
+  .proj-link:hover{border-bottom-color:var(--navy);}
+
+  .no-results{display:none; font-family:'Source Serif 4', serif; color:var(--ink-soft); padding:40px 0; text-align:center;}
+  .no-results.show{display:block;}
+
+  footer{border-top:1px solid var(--rule); padding:32px 0 48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  footer p{font-size:0.85rem; color:var(--ink-soft); margin:0;}
+  footer a{color:var(--ink-soft); text-decoration:none; margin-left:18px; font-size:0.85rem;}
+  footer a:hover{color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="index.html">James Bona-Landry</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="coursework.html">Coursework</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="academia.html">Academia</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap page-head">
+  <h1>Projects</h1>
+  <p class="lede">A gallery of (selected) personal projects I've worked on over the years</p>
+</div>
+
+<div class="wrap">
+  <div class="filter-bar" id="filter-bar">
+    <button class="filter-btn active" data-tag="all">All</button>
+    <button class="filter-btn" data-tag="probability">probability</button>
+    <button class="filter-btn" data-tag="combinatorics">combinatorics</button>
+    <button class="filter-btn" data-tag="deep-learning">deep-learning</button>
+    <button class="filter-btn" data-tag="machine-learning">machine-learning</button>
+    <button class="filter-btn" data-tag="pde">pde</button>
+    <button class="filter-btn" data-tag="statistical-mechanics">statistical-mechanics</button>
+    <button class="filter-btn" data-tag="algebra">algebra</button>
+  </div>
+
+  <div class="proj-grid" id="proj-grid">
+
+    <article class="proj-card" data-tags="probability machine-learning">
+      <a class="proj-thumb" href="files/generalization_ability_of_neural_networks.pdf" aria-label="Read the Generalization Ability of Neural Networks writeup">
+        <img src="images/generalization.png" alt="Diagram of a fitted line with residuals, illustrating the gap between a model and the data it is trained on">
+      </a>
+      <div class="proj-body">
+        <p class="proj-date">Fall 2025</p>
+        <h2><a href="files/generalization_ability_of_neural_networks.pdf">Generalization Ability of Neural Networks</a></h2>
+        <p class="proj-desc">Final project &amp; presentation for a topics course on the powerful machinery and techniques associated with Gaussian distributions. Based on <a href="https://www.jstor.org/stable/2700001">a paper of Koltchinskii and Panchenko</a>, the talk develops uniform bounds on the generalization error of classifiers in terms of the so-called Gaussian complexity of an underlying class of functions.</p>
+        <div class="proj-tags"><span>probability</span><span>machine-learning</span></div>
+        <a class="proj-link" href="files/generalization_ability_of_neural_networks.pdf">Read the notes (PDF)</a>
+      </div>
+    </article>
+
+    <article class="proj-card" data-tags="deep-learning machine-learning">
+      <a class="proj-thumb" href="files/MAT1525_project.pdf" aria-label="Read the FeatureFusion writeup" target="_blank" rel="noopener">
+        <img src="images/featurefusion.png" alt="Diagram of several model feature stacks merging into a single combined model">
+      </a>
+      <div class="proj-body">
+        <p class="proj-date">Winter 2025</p>
+        <h2><a href="files/MAT1525_project.pdf" target="_blank" rel="noopener">FeatureFusion</a></h2>
+        <p class="proj-desc">Final project for a topics course on the mathematical underpinnings of diffusion models. Introduces, analyzes, and evaluates a novel method for merging diffusion models trained on different tasks based on the correlations between their internal feature representations.</p>
+        <div class="proj-tags"><span>deep-learning</span><span>diffusion-models</span></div>
+        <a class="proj-link" href="files/MAT1525_project.pdf" target="_blank" rel="noopener">Read the write-up (PDF)</a>
+      </div>
+    </article>
+
+    <article class="proj-card" data-tags="combinatorics algebra">
+      <a class="proj-thumb" href="files/sunflower_problem.pdf" aria-label="Read the Sunflower Problem writeup">
+        <img src="images/sunflower.png" alt="A sunflower diagram illustrating a sunflower family of sets, with petals representing sets sharing a common core">
+      </a>
+      <div class="proj-body">
+        <p class="proj-date">Winter 2025</p>
+        <h2><a href="files/sunflower_problem.pdf">The Sunflower Problem</a></h2>
+        <p class="proj-desc">Final project for a topics course on algebraic complexity theory. Surveys recent <a href="https://www.cambridge.org/core/journals/forum-of-mathematics-sigma/article/upper-bounds-for-sunflowerfree-sets/ED7A0DE48541FA919651E4533393CDD8">breakthrough progress by Naslund and Sawin</a> on bounding the size of sunflower-free families of sets.</p>
+        <div class="proj-tags"><span>combinatorics</span><span>algebra</span></div>
+        <a class="proj-link" href="files/sunflower_problem.pdf">Read the write-up (PDF)</a>
+      </div>
+    </article>
+
+    <article class="proj-card" data-tags="deep-learning machine-learning">
+      <a class="proj-thumb" href="files/MAT1510_final_writeup.pdf" aria-label="Read the Vision Transformers writeup">
+        <img src="images/vision-transformers.png" alt="Diagram of a neural network classifying images of cats and dogs into a predicted output label">
+      </a>
+      <div class="proj-body">
+        <p class="proj-date">Fall 2024</p>
+        <h2><a href="files/MAT1510_final_writeup.pdf">Understanding Robustness in Vision Transformers</a></h2>
+        <p class="proj-desc">Final project for a topics course on deep learning. Investigates whether implementing multiple patch embedding layers with varying patch sizes has a positive impact on model robustness in the case of vision transformers.</p>
+        <div class="proj-tags"><span>deep-learning</span><span>machine-learning</span></div>
+        <a class="proj-link" href="files/MAT1510_final_writeup.pdf">Read the write-up (PDF)</a>
+      </div>
+    </article>
+
+    <article class="proj-card" data-tags="pde probability">
+      <a class="proj-thumb" href="files/random_data_nls.pdf" aria-label="Read the Random Data NLS writeup">
+        <img src="images/nls.png" alt="A 3D plot of an exact solution surface to the nonlinear Schrödinger equation over space and time">
+      </a>
+      <div class="proj-body">
+        <p class="proj-date">Fall 2024</p>
+        <h2><a href="files/random_data_nls.pdf">Random Data NLS</a></h2>
+        <p class="proj-desc">Final project &amp; presentation for a topics course on nonlinear evolution PDEs. Studies the periodic nonlinear Schrödinger equation from a probabilistic perspective, examining how randomizing the initial data shifts the well-posedness threshold.</p>
+        <div class="proj-tags"><span>pde</span><span>probability</span></div>
+        <a class="proj-link" href="files/random_data_nls.pdf">Read the notes (PDF)</a>
+      </div>
+    </article>
+
+    <article class="proj-card" data-tags="probability combinatorics algebra">
+      <a class="proj-thumb" href="files/integrable_probability_and_kpz.pdf" aria-label="Read the Integrable Probability and KPZ Universality notes">
+        <img src="images/integrable-probability.jpg" alt="A random fluctuating height function, illustrating a KPZ-class growth interface">
+      </a>
+      <div class="proj-body">
+        <p class="proj-date">Spring 2024</p>
+        <h2><a href="files/integrable_probability_and_kpz.pdf">Integrable Probability and KPZ Universality</a></h2>
+        <p class="proj-desc">A set of notes written for a reading course on integrable probability supervised by <a href="https://www.math.toronto.edu/ddauver/">Prof. Duncan Dauvergne</a>, focusing on the algebraic and combinatorial underpinnings of the field.</p>
+        <div class="proj-tags"><span>probability</span><span>combinatorics</span><span>algebra</span></div>
+        <a class="proj-link" href="files/integrable_probability_and_kpz.pdf">Read the notes (PDF)</a>
+      </div>
+    </article>
+
+    <article class="proj-card" data-tags="probability combinatorics statistical-mechanics">
+      <a class="proj-thumb" href="files/kpz_comb_systems.pdf" aria-label="Read the KPZ Universality in Combinatorial Systems notes">
+        <img src="images/kpz-comb-systems.png" alt="A parabolic limit shape with a fluctuating path converging to it, illustrating a combinatorial growth model">
+      </a>
+      <div class="proj-body">
+        <p class="proj-date">Summer 2023</p>
+        <h2><a href="files/kpz_comb_systems.pdf">KPZ Universality in Combinatorial Systems</a></h2>
+        <p class="proj-desc">A set of notes written for a summer project supervised by <a href="https://www.math.toronto.edu/quastel/">Prof. Jeremy Quastel</a>. Surveys some classical examples of exactly solved models in statistical mechanics, as well as underlying algebraic and combinatorial techniques.</p>
+        <div class="proj-tags"><span>probability</span><span>statistical-mechanics</span></div>
+        <a class="proj-link" href="files/kpz_comb_systems.pdf">Read the notes (PDF)</a>
+      </div>
+    </article>
+
+    <article class="proj-card" data-tags="algebra statistical-mechanics">
+      <a class="proj-thumb" href="files/spin_chains.pdf" aria-label="Read the Spin Chains notes">
+        <img src="images/spin-chain.jpg" alt="A spin chain diagram showing alternating up and down spins arranged on a ring">
+      </a>
+      <div class="proj-body">
+        <p class="proj-date">Summer 2022</p>
+        <h2><a href="files/spin_chains.pdf">Spin Chains</a></h2>
+        <p class="proj-desc">A set of notes written for a summer project supervised by <a href="https://www.math.toronto.edu/mgualt/">Prof. Marco Gualtieri</a>. Develops a rigorous algebraic framework for understanding spin chains.</p>
+        <div class="proj-tags"><span>algebra</span><span>statistical-mechanics</span></div>
+        <a class="proj-link" href="files/spin_chains.pdf">Read the notes (PDF)</a>
+      </div>
+    </article>
+
+  </div>
+  <p class="no-results" id="no-results">No projects match that filter.</p>
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; width:100%;">
+    <p>© 2026 James Bona-Landry</p>
+    <div>
+      <a href="mailto:james.bonalandry@mail.utoronto.ca">Email</a>
+      <a href="files/curriculum_vitae.pdf">CV</a>
+      <a href="https://www.linkedin.com/in/james-bona-landry-a52426406/">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var buttons = Array.from(document.querySelectorAll('.filter-btn'));
+  var cards = Array.from(document.querySelectorAll('.proj-card'));
+  var noResults = document.getElementById('no-results');
+
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var tag = btn.getAttribute('data-tag');
+      if(tag === 'all'){
+        buttons.forEach(function(b){ b.classList.toggle('active', b === btn); });
+      } else {
+        buttons.find(function(b){ return b.getAttribute('data-tag') === 'all'; }).classList.remove('active');
+        btn.classList.toggle('active');
+        var anyActive = buttons.some(function(b){ return b.getAttribute('data-tag') !== 'all' && b.classList.contains('active'); });
+        if(!anyActive){
+          buttons.find(function(b){ return b.getAttribute('data-tag') === 'all'; }).classList.add('active');
+        }
+      }
+      applyFilter();
+    });
+  });
+
+  function applyFilter(){
+    var activeTags = buttons
+      .filter(function(b){ return b.classList.contains('active') && b.getAttribute('data-tag') !== 'all'; })
+      .map(function(b){ return b.getAttribute('data-tag'); });
+
+    var visibleCount = 0;
+    cards.forEach(function(card){
+      var tags = card.getAttribute('data-tags').split(' ');
+      var show = activeTags.length === 0 || activeTags.some(function(t){ return tags.indexOf(t) !== -1; });
+      card.classList.toggle('hidden', !show);
+      if(show) visibleCount++;
+    });
+    noResults.classList.toggle('show', visibleCount === 0);
+  }
+})();
+</script>
+
+</body>
+</html>

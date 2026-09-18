@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coursework — James Bona-Landry</title>
+<meta name="description" content="Mathematics coursework taken by James Bona-Landry at the University of Toronto">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF6; --paper-alt:#F1EEE4; --ink:#1C1B17; --ink-soft:#5B594E;
+    --rule:#DAD5C6; --navy:#223A5E; --navy-deep:#152740; --ochre:#9C6B24; --max:1100px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans', system-ui, sans-serif; -webkit-font-smoothing:antialiased;}
+  a{color:var(--navy);}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+
+  header{position:sticky; top:0; z-index:20; background:rgba(251,250,246,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--rule);}
+  header .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:20px; padding-bottom:20px;}
+  .brand{font-family:'Source Serif 4', serif; font-size:1.2rem; font-weight:600; color:var(--ink); text-decoration:none;}
+  nav ul{list-style:none; display:flex; gap:30px; margin:0; padding:0;}
+  nav a{text-decoration:none; color:var(--ink-soft); font-size:0.95rem; font-weight:500; padding-bottom:4px; border-bottom:2px solid transparent;}
+  nav a:hover{color:var(--ink);}
+  nav a.active{color:var(--ink); border-bottom-color:var(--navy);}
+
+  .page-head{padding:56px 0 8px;}
+  h1{font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(2rem,3.4vw,2.7rem); margin:0 0 16px;}
+  .lede{font-family:'Source Serif 4', serif; font-size:1.05rem; line-height:1.6; color:var(--ink); max-width:64ch; margin:0 0 6px;}
+  .legend{font-size:0.85rem; color:var(--ink-soft); margin:0 0 32px;}
+
+  /* accordion shell */
+  .degree{border-top:1px solid var(--rule);}
+  .degree:last-child{border-bottom:1px solid var(--rule);}
+
+  .degree-toggle{
+    all:unset; box-sizing:border-box; display:flex; align-items:flex-start; justify-content:space-between;
+    width:100%; cursor:pointer; padding:26px 4px; gap:20px;
+  }
+  .degree-toggle:hover .degree-heading h2{color:var(--navy);}
+  .degree-heading h2{
+    font-family:'Source Serif 4', serif; font-weight:600; font-size:1.35rem;
+    margin:0 0 6px; color:var(--ink); transition:color 150ms ease;
+  }
+  .degree-heading .program{font-size:0.88rem; color:var(--ink-soft); margin:0;}
+  .degree-count{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-soft);
+    margin-left:10px; font-weight:400;
+  }
+
+  .chevron{
+    flex-shrink:0; width:20px; height:20px; margin-top:4px; color:var(--ink-soft);
+    transition:transform 280ms cubic-bezier(.4,0,.2,1);
+  }
+  .degree-toggle[aria-expanded="false"] .chevron{transform:rotate(-90deg);}
+
+  .degree-panel{
+    display:grid; grid-template-rows:1fr; opacity:1;
+    transition:grid-template-rows 320ms cubic-bezier(.4,0,.2,1), opacity 280ms ease;
+  }
+  .degree-panel.collapsed{grid-template-rows:0fr; opacity:0;}
+  .degree-panel-inner{overflow:hidden; min-height:0; padding-bottom:30px;}
+
+  .course-labels{
+    display:grid; grid-template-columns:110px 1fr 96px 46px; gap:16px;
+    padding:0 4px 8px; margin-top:2px;
+  }
+  .course-labels span{font-size:0.7rem; color:var(--ink-soft); font-weight:600; letter-spacing:0.02em; text-transform:uppercase;}
+  .course-labels .gc{text-align:center;}
+
+  .course{
+    display:grid; grid-template-columns:110px 1fr 96px 46px; gap:16px;
+    padding:11px 4px; border-top:1px solid var(--rule);
+    align-items:center;
+  }
+  .code{font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--navy); font-weight:500; white-space:nowrap;}
+  .code sup{color:var(--ochre);}
+  .title-line{font-family:'Source Serif 4', serif; font-size:1rem; line-height:1.42;}
+  .title-line a{text-decoration:none; border-bottom:1px solid transparent;}
+  .title-line a:hover{border-bottom-color:var(--navy);}
+  .with{font-family:'IBM Plex Sans', sans-serif; font-size:0.84rem; color:var(--ink-soft);}
+  .with a{color:var(--ink-soft); text-decoration:none; border-bottom:1px solid var(--rule);}
+  .with a:hover{color:var(--navy); border-bottom-color:var(--navy);}
+  .term{
+    font-family:'IBM Plex Sans', sans-serif; font-size:0.78rem; color:var(--ink-soft);
+    text-align:center; line-height:1.3;
+  }
+  .grade{
+    font-family:'IBM Plex Mono', monospace; font-size:0.85rem; font-weight:500;
+    color:var(--ochre); text-align:center;
+  }
+
+  footer{border-top:1px solid var(--rule); padding:32px 0 48px; margin-top:60px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  footer p{font-size:0.85rem; color:var(--ink-soft); margin:0;}
+  footer a{color:var(--ink-soft); text-decoration:none; margin-left:18px; font-size:0.85rem;}
+  footer a:hover{color:var(--navy);}
+
+  @media (max-width:640px){
+    .course{
+      grid-template-columns:auto 1fr auto; column-gap:12px;
+      grid-template-areas:"code term grade" "content content content";
+      row-gap:6px;
+    }
+    .course .code{grid-area:code;}
+    .course .term{grid-area:term; text-align:left; justify-self:start;}
+    .course .grade{grid-area:grade; justify-self:end;}
+    .course > div:nth-child(2){grid-area:content;}
+    .course-labels{display:none;}
+    .degree-heading .program{max-width:230px;}
+    nav ul{gap:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="index.html">James Bona-Landry</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="coursework.html" class="active">Coursework</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="academia.html">Academia</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap page-head">
+  <h1>Coursework</h1>
+  <p class="lede">A transcript-style record of mathematics courses I have taken throughout my studies</p>
+  <p class="legend"><sup style="color:var(--ochre);">*</sup> indicates a graduate-level course.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="degree">
+    <button class="degree-toggle" aria-expanded="true" aria-controls="panel-phd">
+      <div class="degree-heading">
+        <h2>Doctor of Philosophy — Mathematics<span class="degree-count">3 courses</span></h2>
+        <p class="program">University of Toronto · supervised by <a href="http://www.math.toronto.edu/quastel/" onclick="event.stopPropagation()">Prof. Jeremy Quastel</a> · Sep 2025 – Summer 2028 (expected)</p>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="degree-panel" id="panel-phd">
+      <div class="degree-panel-inner">
+        <div class="course-labels">
+          <span>Code</span><span>Course</span><span class="gc">Term</span><span class="gc">Grade</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1128<sup>*</sup></span>
+          <div>
+            <div class="title-line">Modern Discrete Probability</div>
+            <div class="with">with <a href="https://www.math.utoronto.ca/balint/">Prof. Bálint Virág</a></div>
+          </div>
+          <span class="term">Fall 2026</span>
+          <span class="grade">IPR</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1901<sup>*</sup></span>
+          <div>
+            <div class="title-line">Symmetric Group Representation and Symmetric Functions</div>
+            <div class="with">with <a href="https://www.mathematics.utoronto.ca/people/directories/all-faculty/vasu-tewari">Prof. Vasu Tewari</a></div>
+          </div>
+          <span class="term">Winter 2026</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1128<sup>*</sup></span>
+          <div>
+            <div class="title-line">Gaussian Distributions with Applications</div>
+            <div class="with">with <a href="https://www.mathematics.utoronto.ca/people/directories/all-faculty/dmitry-panchenko">Prof. Dmitry Panchenko</a></div>
+          </div>
+          <span class="term">Fall 2025</span>
+          <span class="grade">A+</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="degree">
+    <button class="degree-toggle" aria-expanded="false" aria-controls="panel-msc">
+      <div class="degree-heading">
+        <h2>Master of Science — Mathematics<span class="degree-count">6 courses</span></h2>
+        <p class="program">University of Toronto · supervised by <a href="http://www.math.toronto.edu/quastel/" onclick="event.stopPropagation()">Prof. Jeremy Quastel</a> · Sep 2024 – Nov 2025</p>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="degree-panel collapsed" id="panel-msc">
+      <div class="degree-panel-inner">
+        <div class="course-labels">
+          <span>Code</span><span>Course</span><span class="gc">Term</span><span class="gc">Grade</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1314<sup>*</sup></span>
+          <div>
+            <div class="title-line">Introduction to Noncommutative Geometry</div>
+            <div class="with">with Prof. George Elliot</div>
+          </div>
+          <span class="term">Fall 2025</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1304<sup>*</sup></span>
+          <div>
+            <div class="title-line">Algebraic Complexity Theory</div>
+            <div class="with">with Prof. Shubhangi Saraf</div>
+          </div>
+          <span class="term">Winter 2025</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1525<sup>*</sup></span>
+          <div>
+            <div class="title-line">Variational Methods in Imaging and Neural Networks</div>
+            <div class="with">with <a href="https://www.mathematics.utoronto.ca/people/directories/all-faculty/adrian-nachman">Prof. Adrian Nachman</a></div>
+          </div>
+          <span class="term">Winter 2025</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1510<sup>*</sup></span>
+          <div>
+            <div class="title-line"><a href="https://sites.google.com/view/mat1510">Deep Learning: Theory &amp; Data Science</a></div>
+            <div class="with">with <a href="https://sites.google.com/view/vardan-papyan">Prof. Vardan Papyan</a></div>
+          </div>
+          <span class="term">Fall 2024</span>
+          <span class="grade">A</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1128<sup>*</sup></span>
+          <div>
+            <div class="title-line">Gaussian Random Measures</div>
+            <div class="with">with <a href="https://www.math.utoronto.ca/balint/">Prof. Bálint Virág</a></div>
+          </div>
+          <span class="term">Fall 2024</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1062<sup>*</sup></span>
+          <div>
+            <div class="title-line">Introduction to Nonlinear Evolution Equations</div>
+            <div class="with">with <a href="https://www.math.toronto.edu/fabiop/">Prof. Fabio Pusateri</a></div>
+          </div>
+          <span class="term">Fall 2024</span>
+          <span class="grade">A</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="degree">
+    <button class="degree-toggle" aria-expanded="false" aria-controls="panel-bsc">
+      <div class="degree-heading">
+        <h2>Honours Bachelor of Science — Mathematics Specialist<span class="degree-count">26 courses</span></h2>
+        <p class="program">University of Toronto · <a href="https://artsci.calendar.utoronto.ca/program/asspe1165" onclick="event.stopPropagation()">program page</a> · Sep 2020 – Jun 2024</p>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="degree-panel collapsed" id="panel-bsc">
+      <div class="degree-panel-inner">
+        <div class="course-labels">
+          <span>Code</span><span>Course</span><span class="gc">Term</span><span class="gc">Grade</span>
+        </div>
+
+        <div class="course">
+          <span class="code">APM 461<sup>*</sup></span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/apm461h1">Combinatorial Methods</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/swastik/">Prof. Swastik Kopparty</a></div></div>
+          <span class="term">Fall 2023</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1601<sup>*</sup></span>
+          <div><div class="title-line">Mathematical Probability II</div>
+          <div class="with">with <a href="https://www.math.utoronto.ca/balint/">Prof. Bálint Virág</a></div></div>
+          <span class="term">Winter 2024</span>
+          <span class="grade">A-</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 482</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat482h1">Elliptic Partial Differential Equations and Applications</a></div>
+          <div class="with">with <a href="https://www.mathematics.utoronto.ca/people/directories/all-faculty/tristan-collins">Prof. Tristan Collins</a></div></div>
+          <span class="term">Winter 2024</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 495</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat495h1">Integrable Probability and KPZ Universality</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/ddauver/">Prof. Duncan Dauvergne</a></div></div>
+          <span class="term">Winter 2024</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1600<sup>*</sup></span>
+          <div><div class="title-line">Mathematical Probability I</div>
+          <div class="with">with <a href="https://www.math.toronto.edu/ddauver/">Prof. Duncan Dauvergne</a></div></div>
+          <span class="term">Fall 2023</span>
+          <span class="grade">A</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 409<sup>*</sup></span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat409h1">Set Theory</a></div>
+          <div class="with">with <a href="https://www.mathematics.utoronto.ca/people/directories/all-faculty/stevo-todorcevic">Prof. Stevo Todorčević</a></div></div>
+          <span class="term">Fall 2023</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 464<sup>*</sup></span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat464h1">Riemannian Geometry</a></div>
+          <div class="with">with <a href="https://www.math.utoronto.ca/rina/">Prof. Regina Rotman</a></div></div>
+          <span class="term">Winter 2024</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 477</span>
+          <div><div class="title-line"><a href="https://www.math.toronto.edu/mgualt/courses/23-477/">Seminar in Mathematics: Discrete Geometry</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/mgualt/">Prof. Marco Gualtieri</a></div></div>
+          <span class="term">Fall 2023</span>
+          <span class="grade">A+</span>
+        </div>
+
+        <div class="course">
+          <span class="code">MAT 347</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat347y1">Groups, Rings, and Fields</a></div>
+          <div class="with">with <a href="https://www.mathematics.utoronto.ca/people/directories/all-faculty/joe-repka">Prof. Joseph Repka</a></div></div>
+          <span class="term">Full Year 2022–23</span>
+          <span class="grade">B+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 351</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat351y1">Partial Differential Equations</a></div>
+          <div class="with">with <a href="https://www.mathematics.utoronto.ca/people/directories/all-faculty/catherine-sulem">Prof. Catherine Sulem</a></div></div>
+          <span class="term">Full Year 2022–23</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 454<sup>*</sup></span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat454h1">Complex Analysis II</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/bierston/">Prof. Edward Bierstone</a></div></div>
+          <span class="term">Winter 2023</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 458<sup>*</sup></span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat458h1">Advanced Real Analysis II</a></div>
+          <div class="with">with <a href="https://www.artsci.utoronto.ca/about/glance/new-faculty/2020-21/ignacio-uriarte-tuero">Prof. Ignacio Uriarte-Tuero</a></div></div>
+          <span class="term">Winter 2023</span>
+          <span class="grade">A-</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 495</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat495h1">Geometry &amp; Spectra of Compact Riemannian Surfaces</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/rafi/">Prof. Kasra Rafi</a></div></div>
+          <span class="term">Winter 2023</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 1300<sup>*</sup></span>
+          <div><div class="title-line"><a href="https://www.math.toronto.edu/mgualt/courses/22-1300/">Differential Topology</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/mgualt/">Prof. Marco Gualtieri</a></div></div>
+          <span class="term">Fall 2022</span>
+          <span class="grade">A</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 354</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat354h1">Complex Analysis I</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/bierston/">Prof. Edward Bierstone</a></div></div>
+          <span class="term">Fall 2022</span>
+          <span class="grade">A-</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 457<sup>*</sup></span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat457h1">Advanced Real Analysis I</a></div>
+          <div class="with">with <a href="https://www.math.utoronto.ca/kzhang/">Prof. Ke Zhang</a></div></div>
+          <span class="term">Fall 2022</span>
+          <span class="grade">A-</span>
+        </div>
+
+        <div class="course">
+          <span class="code">MAT 395</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat395h1">Hyperbolic Geometry</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/rafi/">Prof. Kasra Rafi</a></div></div>
+          <span class="term">Summer 2022</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 257</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat257y1">Analysis II</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/drorbn/">Prof. Dror Bar-Natan</a></div></div>
+          <span class="term">Full Year 2021–22</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 267</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat267h1">Advanced Ordinary Differential Equations</a></div>
+          <div class="with">with <a href="https://www.artsci.utoronto.ca/about/glance/new-faculty/2020-21/ignacio-uriarte-tuero">Prof. Ignacio Uriarte-Tuero</a></div></div>
+          <span class="term">Fall 2021</span>
+          <span class="grade">A</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 357</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat357h1">Foundations of Real Analysis</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/fabiop/">Prof. Fabio Pusateri</a></div></div>
+          <span class="term">Winter 2022</span>
+          <span class="grade">A-</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 309</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat309h1">Introduction to Mathematical Logic</a></div>
+          <div class="with">with Prof. Daniel Calderón</div></div>
+          <span class="term">Fall 2021</span>
+          <span class="grade">A+</span>
+        </div>
+
+        <div class="course">
+          <span class="code">MAT 327</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat327h1">Introduction to Topology</a></div>
+          <div class="with">with Prof. Ivan Limonchenko</div></div>
+          <span class="term">Summer 2021</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 157</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat157y1">Analysis I</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/mein/">Prof. Eckhard Meinrenken</a></div></div>
+          <span class="term">Full Year 2020–21</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 247</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat247h1">Algebra II</a></div>
+          <div class="with">with <a href="https://www.math.utoronto.ca/~jacobt/">Prof. Jacob Tsimerman</a></div></div>
+          <span class="term">Winter 2021</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 344</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat344h1">Introduction to Combinatorics</a></div>
+          <div class="with">with Prof. Zack Wolske</div></div>
+          <span class="term">Fall 2020</span>
+          <span class="grade">A+</span>
+        </div>
+        <div class="course">
+          <span class="code">MAT 240</span>
+          <div><div class="title-line"><a href="https://artsci.calendar.utoronto.ca/course/mat240h1">Algebra I</a></div>
+          <div class="with">with <a href="https://www.math.toronto.edu/mgualt/">Prof. Marco Gualtieri</a></div></div>
+          <span class="term">Fall 2020</span>
+          <span class="grade">A+</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <p>© 2026 James Bona-Landry</p>
+    <div>
+      <a href="mailto:james.bonalandry@mail.utoronto.ca">Email</a>
+      <a href="files/curriculum_vitae.pdf">CV</a>
+      <a href="https://www.linkedin.com/in/james-bona-landry-a52426406/">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.degree-toggle').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    var expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    panel.classList.toggle('collapsed', expanded);
+  });
+});
+</script>
+
+</body>
+</html>

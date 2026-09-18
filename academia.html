@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academia — James Bona-Landry</title>
+<meta name="description" content="Publications, preprints, and teaching appointments of James Bona-Landry">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- KaTeX CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+<!-- KaTeX JavaScript Core -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+<!-- KaTeX Auto-render Extension -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body, {
+  delimiters: [
+    {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false}
+  ]
+});"></script>
+
+<style>
+  :root{
+    --paper:#FBFAF6; --paper-alt:#F1EEE4; --ink:#1C1B17; --ink-soft:#5B594E;
+    --rule:#DAD5C6; --navy:#223A5E; --navy-deep:#152740; --ochre:#9C6B24; --max:1100px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans', system-ui, sans-serif; -webkit-font-smoothing:antialiased;}
+  a{color:var(--navy);}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+
+  header{position:sticky; top:0; z-index:20; background:rgba(251,250,246,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--rule);}
+  header .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:20px; padding-bottom:20px;}
+  .brand{font-family:'Source Serif 4', serif; font-size:1.2rem; font-weight:600; color:var(--ink); text-decoration:none;}
+  nav ul{list-style:none; display:flex; gap:30px; margin:0; padding:0;}
+  nav a{text-decoration:none; color:var(--ink-soft); font-size:0.95rem; font-weight:500; padding-bottom:4px; border-bottom:2px solid transparent;}
+  nav a:hover{color:var(--ink);}
+  nav a.active{color:var(--ink); border-bottom-color:var(--navy);}
+
+  .page-head{padding:56px 0 12px;}
+  h1{font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(2rem,3.4vw,2.7rem); margin:0 0 16px;}
+  .lede{font-family:'Source Serif 4', serif; font-size:1.05rem; line-height:1.6; color:var(--ink); max-width:64ch; margin:0 0 6px;}
+
+  .section-title{
+    font-family:'Source Serif 4', serif; font-weight:600; font-size:1.32rem;
+    margin:52px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--rule);
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+  }
+  .section-title:first-of-type{margin-top:40px;}
+  .section-note{font-size:0.82rem; color:var(--ink-soft); font-weight:normal;}
+
+  /* Featured Publication Box */
+  .pub-card{
+    background:#fff; border:1px solid var(--rule); border-left:3px solid var(--navy);
+    border-radius:8px; padding:26px 28px; margin-bottom:28px;
+    box-shadow:0 1px 3px rgba(28,27,23,0.04);
+    transition:box-shadow 220ms ease, transform 220ms ease;
+  }
+  .pub-card:hover{box-shadow:0 12px 28px -16px rgba(28,27,23,0.22); transform:translateY(-2px);}
+  .pub-badge{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; font-weight:500;
+    letter-spacing:0.04em; color:var(--navy); background:rgba(34,58,94,0.07);
+    padding:4px 10px; border-radius:100px; margin-bottom:14px;
+  }
+  .pub-card h3{font-family:'Source Serif 4', serif; font-weight:600; font-size:1.28rem; line-height:1.32; margin:0 0 12px;}
+  .pub-card h3 a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent;}
+  .pub-card h3 a:hover{color:var(--navy); border-bottom-color:var(--navy);}
+  .pub-card p{font-family:'Source Serif 4', serif; font-size:0.98rem; line-height:1.62; color:var(--ink); margin:0 0 18px;}
+  .pub-links{display:flex; align-items:center; flex-wrap:wrap; gap:2px; padding-top:14px; border-top:1px solid var(--rule);}
+  .pub-links a{font-size:0.85rem; font-weight:500; color:var(--navy); text-decoration:none; border-bottom:1px solid var(--rule);}
+  .pub-links a:hover{border-bottom-color:var(--navy);}
+  .pub-sep{color:var(--rule); margin:0 10px;}
+  .pub-venue{font-size:0.85rem; color:var(--ink-soft);}
+  .pub-venue em{font-style:italic;}
+
+  /* Selected Talks Grid */
+  .talks-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;
+  }
+  .talk-card{
+    background:#fff; border:1px solid var(--rule); border-radius:8px; padding:22px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    box-shadow:0 1px 3px rgba(28,27,23,0.04);
+    transition:box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
+  }
+  .talk-card:hover{box-shadow:0 12px 28px -16px rgba(28,27,23,0.22); transform:translateY(-2px); border-color:var(--navy);}
+  .talk-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; font-weight:500; color:var(--ochre); margin-bottom:10px;
+  }
+  .talk-card h3{font-family:'Source Serif 4', serif; font-weight:600; font-size:1.08rem; line-height:1.32; margin:0 0 10px;}
+  .talk-card h3 a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent;}
+  .talk-card h3 a:hover{color:var(--navy); border-bottom-color:var(--navy);}
+  .talk-card p.abstract{font-family:'Source Serif 4', serif; font-size:0.92rem; line-height:1.56; color:var(--ink-soft); margin:0;}
+
+  /* Teaching Table Card */
+  .teaching-card{
+    background:#fff; border:1px solid var(--rule); border-radius:8px; overflow:hidden;
+    box-shadow:0 1px 3px rgba(28,27,23,0.04);
+  }
+  .ta-row{
+    display:grid; grid-template-columns:100px 1fr 180px; gap:16px; padding:14px 22px;
+    border-bottom:1px solid var(--rule); align-items:center;
+    transition:background 150ms ease;
+  }
+  .ta-row:last-child{border-bottom:none;}
+  .ta-row:not(.header):hover{background:var(--paper-alt);}
+  .ta-row.header{background:var(--paper-alt); border-bottom:1px solid var(--rule); font-family:'IBM Plex Mono', monospace; font-size:0.7rem; font-weight:500; letter-spacing:0.04em; color:var(--ink-soft);}
+  .ta-code{font-family:'IBM Plex Mono', monospace; font-size:0.83rem; color:var(--navy); font-weight:500;}
+  .ta-title{font-family:'Source Serif 4', serif; font-size:0.97rem;}
+  .ta-terms{font-family:'IBM Plex Sans', sans-serif; font-size:0.84rem; color:var(--ink-soft); text-align:right;}
+
+  /* Conference Pill Grid */
+  .conf-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px;
+  }
+  .conf-card{
+    background:#fff; border:1px solid var(--rule); border-radius:8px; padding:18px 22px;
+    display:flex; flex-direction:column; justify-content:space-between; gap:7px;
+    box-shadow:0 1px 3px rgba(28,27,23,0.04);
+    transition:box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
+  }
+  .conf-card:hover{box-shadow:0 12px 28px -16px rgba(28,27,23,0.22); transform:translateY(-2px); border-color:var(--navy);}
+  .conf-header{display:flex; justify-content:space-between; align-items:center;}
+  .conf-kind{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--navy); font-weight:500; letter-spacing:0.02em;}
+  .conf-tag{font-size:0.72rem; background:rgba(156,107,36,0.1); color:var(--ochre); font-weight:500; padding:3px 9px; border-radius:100px;}
+  .conf-name{font-family:'Source Serif 4', serif; font-size:0.98rem; font-weight:600;}
+  .conf-name a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent;}
+  .conf-name a:hover{color:var(--navy); border-bottom-color:var(--navy);}
+  .conf-meta{font-size:0.82rem; color:var(--ink-soft);}
+
+  footer{border-top:1px solid var(--rule); padding:32px 0 48px; margin-top:60px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  footer p{font-size:0.85rem; color:var(--ink-soft); margin:0;}
+  footer a{color:var(--ink-soft); text-decoration:none; margin-left:18px; font-size:0.85rem;}
+  footer a:hover{color:var(--navy);}
+
+  @media (max-width:640px){
+    .ta-row{grid-template-columns:1fr; gap:4px;}
+    .ta-row.header{display:none;}
+    .ta-terms{text-align:left;}
+    nav ul{gap:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="index.html">James Bona-Landry</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="coursework.html">Coursework</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="academia.html" class="active">Academia</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap page-head">
+  <h1>Academia</h1>
+  <p class="lede">A record of my publications & preprints, teaching appointments, talks, and conference participation</p>
+</div>
+
+<div class="wrap">
+
+  <div class="section-title">
+    <span>Publications &amp; Preprints</span>
+  </div>
+  
+  <div class="pub-card">
+    <span class="pub-badge">Preprint · April 2026</span>
+    <h3><a href="https://arxiv.org/abs/2604.23462">Invariant measures for the open KPZ equation: the Gaussian case</a></h3>
+    <p>Building on a recent paper of Gu and Quastel for the full-line KPZ equation, this paper adapts their Stein's-equation approach to the open KPZ equation. I show that for boundary conditions of the form $$\partial_x h(t,0) = \partial_x h(t,1) = \alpha, \qquad \alpha \in \mathbb{R},$$ Brownian motion with constant drift $\alpha$ is an invariant measure of the dynamics, up to a global height shift.</p>
+    <div class="pub-links">
+      <a href="https://arxiv.org/abs/2604.23462">arXiv:2604.23462</a>
+      <span class="pub-sep">·</span>
+      <span class="pub-venue">Submitted to <em>Mathematical Physics, Analysis and Geometry</em></span>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>Selected Talks</span>
+  </div>
+
+  <div class="talks-grid">
+    <div class="talk-card">
+      <div>
+        <div class="talk-tag">Summer 2024 · Reading group on KPZ</div>
+        <h3><a href="files/intro_to_random_tilings.pdf">Introduction to Random Tilings</a></h3>
+        <p class="abstract">A motivated introduction to random lozenge tilings of polygonal domains on the triangular lattice, culminating in a proof of Thurston's theorem on tileability conditions.</p>
+      </div>
+    </div>
+    <div class="talk-card">
+      <div>
+        <div class="talk-tag">Fall 2023 · Seminar course on discrete geometry</div>
+        <h3><a href="files/kasteleyn_theorem.pdf">Kasteleyn's Theorem</a></h3>
+        <p class="abstract">An intuitive proof of Kasteleyn's 1961 theorem showing that dimer model partition functions on finite planar graphs are Pfaffians of weighted adjacency matrices.</p>
+      </div>
+    </div>
+    <div class="talk-card">
+      <div>
+        <div class="talk-tag">Winter 2023 · Reading course on hyperbolic geometry</div>
+        <h3><a href="files/constructing_hyperbolic_surfaces.pdf">Constructing Compact Hyperbolic Surfaces</a></h3>
+        <p class="abstract">A proof that compact boundaryless hyperbolic surfaces of genus $g \geq 2$ are uniquely determined by their Fenchel–Nielsen parameters.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>Teaching</span>
+    <span class="section-note">Department of Mathematics, University of Toronto</span>
+  </div>
+
+  <div class="teaching-card">
+    <div class="ta-row header">
+      <span>Code</span>
+      <span>Course Title</span>
+      <span style="text-align:right;">Terms Taught</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-code">MAT 236</span>
+      <span class="ta-title">Vector Calculus II</span>
+      <span class="ta-terms">Winter 2027</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-code">MAT 235</span>
+      <span class="ta-title">Vector Calculus I</span>
+      <span class="ta-terms">Summer 2026, Fall 2026</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-code">MAT 244</span>
+      <span class="ta-title">Ordinary Differential Equations</span>
+      <span class="ta-terms">Fall 2026</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-code">MAT 136</span>
+      <span class="ta-title">Calculus II</span>
+      <span class="ta-terms">Winter 2024, 2025, 2026</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-code">MAT 1128</span>
+      <span class="ta-title">Topics in Probability: Stochastic Differential Equations</span>
+      <span class="ta-terms">Winter 2026</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-code">MAT 292</span>
+      <span class="ta-title">Ordinary Differential Equations for Engineering Science</span>
+      <span class="ta-terms">Fall 2025</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-code">MAT 344</span>
+      <span class="ta-title">Introduction to Combinatorics</span>
+      <span class="ta-terms">Winter 2025, Fall 2025</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-code">MAT 135</span>
+      <span class="ta-title">Calculus I</span>
+      <span class="ta-terms">Fall 2023, Fall 2024</span>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>Conferences, Workshops, &amp; Summer Schools</span>
+  </div>
+
+  <div class="conf-grid">
+    <div class="conf-card">
+      <div class="conf-header">
+        <span class="conf-kind">Conference</span>
+        <span class="conf-tag">Chairman</span>
+      </div>
+      <div class="conf-name"><a href="https://sites.google.com/view/birdseyeconference">Bird's Eye Conference</a></div>
+      <div class="conf-meta">University of Toronto · Winter 2026</div>
+    </div>
+
+    <div class="conf-card">
+      <div class="conf-header">
+        <span class="conf-kind">Conference</span>
+      </div>
+      <div class="conf-name"><a href="https://www.fields.utoronto.ca/activities/24-25/FFFM-2024">Forward From the Fields Medal</a></div>
+      <div class="conf-meta">University of Toronto · Summer 2024</div>
+    </div>
+
+    <div class="conf-card">
+      <div class="conf-header">
+        <span class="conf-kind">Summer School</span>
+      </div>
+      <div class="conf-name"><a href="https://lpetrov.cc/vipss2024/">Integrable Probability Summer School</a></div>
+      <div class="conf-meta">University of Virginia · Summer 2024</div>
+    </div>
+
+    <div class="conf-card">
+      <div class="conf-header">
+        <span class="conf-kind">Conference</span>
+        <span class="conf-tag">Organizer</span>
+      </div>
+      <div class="conf-name"><a href="https://www.fields.utoronto.ca/activities/22-23/CUMC2023">Canadian Undergraduate Math Conference</a></div>
+      <div class="conf-meta">University of Toronto · Summer 2023</div>
+    </div>
+
+    <div class="conf-card">
+      <div class="conf-header">
+        <span class="conf-kind">Conference</span>
+      </div>
+      <div class="conf-name"><a href="https://cmssmc.wixsite.com/summer23">CMS Summer Meeting</a></div>
+      <div class="conf-meta">University of Ottawa · Summer 2023</div>
+    </div>
+
+    <div class="conf-card">
+      <div class="conf-header">
+        <span class="conf-kind">Conference</span>
+      </div>
+      <div class="conf-name"><a href="https://www.fields.utoronto.ca/activities/22-23/CUMC2022">Canadian Undergraduate Math Conference</a></div>
+      <div class="conf-meta">Université Laval · Summer 2022</div>
+    </div>
+
+    <div class="conf-card">
+      <div class="conf-header">
+        <span class="conf-kind">Conference</span>
+      </div>
+      <div class="conf-name"><a href="https://www2.cms.math.ca/Events/summer22/sessions_scientific">CMS Summer Meeting</a></div>
+      <div class="conf-meta">Memorial University · Summer 2022</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <p>© 2026 James Bona-Landry</p>
+    <div>
+      <a href="mailto:james.bonalandry@mail.utoronto.ca">Email</a>
+      <a href="files/curriculum_vitae.pdf">CV</a>
+      <a href="https://www.linkedin.com/in/james-bona-landry-a52426406/">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
